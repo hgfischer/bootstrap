@@ -56,6 +56,7 @@ echo "deb http://download.virtualbox.org/virtualbox/debian $UBUNTU_CODENAME cont
 	sudo tee /etc/apt/sources.list.d/virtualbox.list
 wget -q -O - https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo apt-key add -
 sudo add-apt-repository -y ppa:webupd8team/java
+wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 sudo apt-get update
 
 
@@ -63,6 +64,9 @@ info "Installing vim"
 sudo apt-get remove -y vim-tiny
 sudo apt-get install -y vim-nox
 sudo apt-get install -y vim-gtk
+
+info "Installing Google Chrome"
+sudo apt-get install -y google-chrome-stable
 
 info "Installing terminator"
 sudo apt-get install -y terminator
@@ -95,7 +99,7 @@ if [ ! -d ~/.go ]; then
 	info "Installing golang"
 	GOVERSION=1.8beta2
 	TARBALL="go${GOVERSION}.linux-amd64.tar.gz"
-	curl https://storage.googleapis.com/golang/${TARBALL} -o ${DOWNLOADS}/${TARBALL}
+	curl -C - https://storage.googleapis.com/golang/${TARBALL} -o ${DOWNLOADS}/${TARBALL}
 	tar xvzf ${DOWNLOADS}/${TARBALL} -C ${DOWNLOADS}
 	mv ${DOWNLOADS}/go ~/.go
 fi
@@ -149,18 +153,26 @@ cp files/profile.d/* ~/.profile.d/
 
 info "Installing VirtualBox"
 sudo apt-get install -y virtualbox-5.1
+pushd ${DOWNLOADS}
+wget -c http://download.virtualbox.org/virtualbox/5.1.12/Oracle_VM_VirtualBox_Extension_Pack-5.1.12-112440.vbox-extpack
+vboxmanage extpack install --replace `ls -1 *.vbox-extpack`
+popd
 
 info "Installing Vagrant"
 VAGRANT_VERSION=1.9.1
 VAGRANT_PKG=vagrant_${VAGRANT_VERSION}_x86_64.deb
-curl https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/${VAGRANT_PKG} \
+curl -C - https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/${VAGRANT_PKG} \
 	-o ${DOWNLOADS}/${VAGRANT_PKG}
-sudo dpkg -I ${VAGRANT_PKG}
+sudo dpkg -i ${DOWNLOADS}/${VAGRANT_PKG}
 
 info "Installing Java8"
 sudo apt-get -y install oracle-java8-installer oracle-java8-set-default
 
 info "Installing Visual Studio Code"
-curl -L https://vscode-update.azurewebsites.net/latest/linux-deb-x64/stable \
-	-o ${DOWNLOADS}/vscode.deb
-sudo dpkg -I ${DOWNLOADS}/vscode.deb
+if [ ! -f ${DOWNLOADS}/vscode.deb ]; then
+	curl -C - -L https://vscode-update.azurewebsites.net/latest/linux-deb-x64/stable \
+		-o ${DOWNLOADS}/vscode.deb
+	sudo dpkg -i ${DOWNLOADS}/vscode.deb
+fi
+
+sudo apt-get autoremove -y
