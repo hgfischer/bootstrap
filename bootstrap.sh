@@ -185,8 +185,8 @@ if [ ! -f ${DOWNLOADS}/franz.tgz ]; then
 	cat files/Franz.desktop | sudo tee /usr/share/applications/Franz.desktop
 fi
 
-info "Installing adb"
-sudo apt-get install -y adb
+info "Installing Android Tools"
+sudo apt-get install -y adb fastboot
 
 info "Cleaning up"
 sudo apt-get autoremove -y
