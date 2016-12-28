@@ -194,5 +194,15 @@ sudo apt-get install -y bless ghex dhex
 info "Installing ack-grep"
 sudo apt-get install -y ack-grep
 
+info "Installing sqlite3"
+sudo apt-get install -y sqlite3
+
+info "Installing jd-gui"
+if [ ! -f ${DOWNLOADS}/jd-gui.deb ]; then
+	curl -C - -L https://github.com/java-decompiler/jd-gui/releases/download/v1.4.0/jd-gui_1.4.0-0_all.deb \
+		-o ${DOWNLOADS}/jd-gui.deb
+	sudo dpkg -i ${DOWNLOADS}/jd-gui.deb
+fi
+
 info "Cleaning up"
 sudo apt-get autoremove -y
