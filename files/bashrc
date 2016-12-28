@@ -15,7 +15,6 @@ shopt -s histappend
 shopt -s checkwinsize
 shopt -s globstar
 
-export GREP_OPTIONS="--color"
 export EDITOR="vim"
 export MANPAGER="less -X"
 

@@ -188,5 +188,11 @@ fi
 info "Installing Android Tools"
 sudo apt-get install -y adb fastboot
 
+info "Installing hexadecimal editors"
+sudo apt-get install -y bless ghex dhex
+
+info "Installing ack-grep"
+sudo apt-get install -y ack-grep
+
 info "Cleaning up"
 sudo apt-get autoremove -y
