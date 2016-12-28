@@ -175,6 +175,13 @@ if [ ! -f ${DOWNLOADS}/vscode.deb ]; then
 	sudo dpkg -i ${DOWNLOADS}/vscode.deb
 fi
 
+info "Installing Sublime Text 3"
+if [ ! -f ${DOWNLOADS}/sublime-text3.deb ]; then
+	curl -C - -L https://download.sublimetext.com/sublime-text_build-3126_amd64.deb
+		-o ${DOWNLOADS}/sublime-text3.deb
+	sudo dpkg -i ${DOWNLOADS}/sublime-text3.deb
+fi
+
 info "Installing Franz"
 FRANZ_VER=4.0.4
 if [ ! -f ${DOWNLOADS}/franz.tgz ]; then
