@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DOWNLOADS=~/Downloads
+
 notice() {
 	echo -n "$(tput bold)$(tput smul)$(tput setaf 7)$(tput setab 4)"
 	echo -n " $(echo "$@" | tr [a-z] [A-Z]) "
@@ -87,7 +89,16 @@ sudo apt-get install -y tmux
 info "Installing xclip"
 sudo apt-get install -y xclip
 
+info "Installing golang"
+GOVERSION=1.8beta2
+TARBALL="go${GOVERSION}.linux-amd64.tar.gz"
+wget https://storage.googleapis.com/golang/${TARBALL} ${DOWNLOADS}/${TARBALL}
+tar xvzf ${TARBALL} -C ${DOWNLOADS}
+mv ${DOWNLOADS}/go ~/.go
 
+info "Configuring bash"
+mkdir ~/.profile.d/
+cp files/profile.d/* ~/.profile.d/
 
 info "Configuring vim"
 cp files/vimrc ~/.vimrc
