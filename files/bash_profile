@@ -1,0 +1,22 @@
+#!/bin/bash
+
+export TERM=xterm-256color
+export GREP_OPTIONS="--color"
+export EDITOR="vim"
+export MANPAGER="less -X"
+
+export HISTTIMEFORMAT="%F %T "
+export HISTSIZE=500
+export HISTFILESIZE=5000
+export HISTCONTROL="ignoredups"
+
+if [ -d $HOME/.profile.d ]; then
+  for i in $HOME/.profile.d/*.sh; do
+    if [ -r $i ]; then
+      source $i
+    fi
+  done
+  unset i
+fi
+
+alias vi=/usr/local/bin/vim
