@@ -97,8 +97,8 @@ sudo apt-get install -y xclip
 
 if [ ! -d ~/.go ]; then
 	info "Installing golang"
-	GOVERSION=1.8beta2
-	TARBALL="go${GOVERSION}.linux-amd64.tar.gz"
+	GO_VER=1.8beta2
+	TARBALL="go${GO_VER}.linux-amd64.tar.gz"
 	curl -C - https://storage.googleapis.com/golang/${TARBALL} -o ${DOWNLOADS}/${TARBALL}
 	tar xvzf ${DOWNLOADS}/${TARBALL} -C ${DOWNLOADS}
 	mv ${DOWNLOADS}/go ~/.go
@@ -159,9 +159,9 @@ vboxmanage extpack install --replace `ls -1 *.vbox-extpack`
 popd
 
 info "Installing Vagrant"
-VAGRANT_VERSION=1.9.1
-VAGRANT_PKG=vagrant_${VAGRANT_VERSION}_x86_64.deb
-curl -C - https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/${VAGRANT_PKG} \
+VAGRANT_VER=1.9.1
+VAGRANT_PKG=vagrant_${VAGRANT_VER}_x86_64.deb
+curl -C - https://releases.hashicorp.com/vagrant/${VAGRANT_VER}/${VAGRANT_PKG} \
 	-o ${DOWNLOADS}/${VAGRANT_PKG}
 sudo dpkg -i ${DOWNLOADS}/${VAGRANT_PKG}
 
@@ -174,5 +174,16 @@ if [ ! -f ${DOWNLOADS}/vscode.deb ]; then
 		-o ${DOWNLOADS}/vscode.deb
 	sudo dpkg -i ${DOWNLOADS}/vscode.deb
 fi
+
+info "Installing Franz"
+FRANZ_VER=4.0.4
+if [ ! -f ${DOWNLOADS}/franz.tgz ]; then
+	curl -C - -L \
+		https://github.com/meetfranz/franz-app/releases/download/${FRANZ_VER}/Franz-linux-x64-${FRANZ_VER}.tgz \
+		-o ${DOWNLOADS}/franz.tgz
+	sudo tar xvzf ${DOWNLOADS}/franz.tgz -C /opt/Franz
+	cat files/Franz.desktop | sudo tee /usr/share/applications/Franz.desktop
+fi
+
 
 sudo apt-get autoremove -y

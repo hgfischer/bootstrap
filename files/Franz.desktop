@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Franz
+Exec=/opt/Franz/Franz
+Icon=/opt/Franz/resources/app.asar.unpacked/assets/franz.svg
+Type=Application
+StartupNotify=true
