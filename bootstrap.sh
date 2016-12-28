@@ -98,6 +98,7 @@ mv ${DOWNLOADS}/go ~/.go
 
 info "Configuring bash"
 mkdir ~/.profile.d/
+cp files/bash_profile ~/.bash_profile
 cp files/profile.d/* ~/.profile.d/
 
 info "Configuring vim"
