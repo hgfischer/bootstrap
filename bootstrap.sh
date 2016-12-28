@@ -15,7 +15,7 @@ ask() {
 }
 
 info() {
-	echo -n "$(tput bold)$(tput setaf 7)$(tput setab 0)"
+	echo -n "$(tput bold)$(tput setaf 2)$(tput setab 0)"
 	echo -n "$@"
 	echo "$(tput sgr0)"
 }
@@ -52,10 +52,6 @@ sudo add-apt-repository -y ppa:gnome-terminator/nightly-gtk3
 sudo add-apt-repository -y ppa:pi-rho/dev
 sudo apt-get update
 
-info "Upgrading packages"
-sudo apt-get upgrade -y
-sudo apt-get autoremove -y
-
 
 info "Installing vim"
 sudo apt-get remove -y vim-tiny
@@ -89,17 +85,14 @@ sudo apt-get install -y tmux
 info "Installing xclip"
 sudo apt-get install -y xclip
 
-info "Installing golang"
-GOVERSION=1.8beta2
-TARBALL="go${GOVERSION}.linux-amd64.tar.gz"
-wget https://storage.googleapis.com/golang/${TARBALL} ${DOWNLOADS}/${TARBALL}
-tar xvzf ${TARBALL} -C ${DOWNLOADS}
-mv ${DOWNLOADS}/go ~/.go
-
-info "Configuring bash"
-mkdir ~/.profile.d/
-cp files/bash_profile ~/.bash_profile
-cp files/profile.d/* ~/.profile.d/
+if [ ! -d ~/.go ]; then
+	info "Installing golang"
+	GOVERSION=1.8beta2
+	TARBALL="go${GOVERSION}.linux-amd64.tar.gz"
+	curl https://storage.googleapis.com/golang/${TARBALL} -o ${DOWNLOADS}/${TARBALL}
+	tar xvzf ${DOWNLOADS}/${TARBALL} -C ${DOWNLOADS}
+	mv ${DOWNLOADS}/go ~/.go
+fi
 
 info "Configuring vim"
 cp files/vimrc ~/.vimrc
@@ -142,3 +135,9 @@ else
 	git commit -m 'Updated...'
 	popd
 fi
+
+info "Configuring bash"
+mkdir -p ~/.profile.d/
+cp files/bash_profile ~/.bash_profile
+cp files/profile.d/* ~/.profile.d/
+source ~/.bash_profile
