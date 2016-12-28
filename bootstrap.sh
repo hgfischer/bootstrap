@@ -2,6 +2,8 @@
 
 DOWNLOADS=~/Downloads
 
+source /etc/os-release
+
 notice() {
 	echo -n "$(tput bold)$(tput smul)$(tput setaf 7)$(tput setab 4)"
 	echo -n " $(echo "$@" | tr [a-z] [A-Z]) "
@@ -50,6 +52,10 @@ fi
 info "Setting up package repositories"
 sudo add-apt-repository -y ppa:gnome-terminator/nightly-gtk3
 sudo add-apt-repository -y ppa:pi-rho/dev
+echo "deb http://download.virtualbox.org/virtualbox/debian $UBUNTU_CODENAME contrib" | \
+	sudo tee /etc/apt/sources.list.d/virtualbox.list
+wget -q -O - https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo apt-key add -
+sudo add-apt-repository -y ppa:webupd8team/java
 sudo apt-get update
 
 
@@ -138,6 +144,23 @@ fi
 
 info "Configuring bash"
 mkdir -p ~/.profile.d/
-cp files/bash_profile ~/.bash_profile
+cp files/bashrc ~/.bashrc
 cp files/profile.d/* ~/.profile.d/
-source ~/.bash_profile
+
+info "Installing VirtualBox"
+sudo apt-get install -y virtualbox-5.1
+
+info "Installing Vagrant"
+VAGRANT_VERSION=1.9.1
+VAGRANT_PKG=vagrant_${VAGRANT_VERSION}_x86_64.deb
+curl https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/${VAGRANT_PKG} \
+	-o ${DOWNLOADS}/${VAGRANT_PKG}
+sudo dpkg -I ${VAGRANT_PKG}
+
+info "Installing Java8"
+sudo apt-get -y install oracle-java8-installer oracle-java8-set-default
+
+info "Installing Visual Studio Code"
+curl -L https://vscode-update.azurewebsites.net/latest/linux-deb-x64/stable \
+	-o ${DOWNLOADS}/vscode.deb
+sudo dpkg -I ${DOWNLOADS}/vscode.deb
