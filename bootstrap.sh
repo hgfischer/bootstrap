@@ -57,6 +57,8 @@ echo "deb http://download.virtualbox.org/virtualbox/debian $UBUNTU_CODENAME cont
 wget -q -O - https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo apt-key add -
 sudo add-apt-repository -y ppa:webupd8team/java
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | \
+	sudo tee /etc/apt/sources.list.d/google-chrome.list
 sudo apt-get update
 
 
@@ -177,7 +179,7 @@ fi
 
 info "Installing Sublime Text 3"
 if [ ! -f ${DOWNLOADS}/sublime-text3.deb ]; then
-	curl -C - -L https://download.sublimetext.com/sublime-text_build-3126_amd64.deb
+	curl -C - -L https://download.sublimetext.com/sublime-text_build-3126_amd64.deb \
 		-o ${DOWNLOADS}/sublime-text3.deb
 	sudo dpkg -i ${DOWNLOADS}/sublime-text3.deb
 fi
