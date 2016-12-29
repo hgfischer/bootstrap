@@ -46,6 +46,7 @@ if [ ! -f ~/.gitconfig ]; then
 	sudo apt-get install -y git
 	git config --global user.name $name
 	git config --global user.email $email
+	git config --global push.default simple
 fi
 
 
