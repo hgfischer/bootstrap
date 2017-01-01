@@ -60,6 +60,8 @@ sudo add-apt-repository -y ppa:webupd8team/java
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | \
 	sudo tee /etc/apt/sources.list.d/google-chrome.list
+wget -q -O - --no-check-certificate https://download.01.org/gfx/RPM-GPG-KEY-ilg-4 | \
+	sudo apt-key add -
 sudo apt-get update
 
 
@@ -191,9 +193,10 @@ if [ ! -f ${DOWNLOADS}/franz.tgz ]; then
 	curl -C - -L \
 		https://github.com/meetfranz/franz-app/releases/download/${FRANZ_VER}/Franz-linux-x64-${FRANZ_VER}.tgz \
 		-o ${DOWNLOADS}/franz.tgz
-	sudo tar xvzf ${DOWNLOADS}/franz.tgz -C /opt/Franz
-	cat files/Franz.desktop | sudo tee /usr/share/applications/Franz.desktop
 fi
+sudo mkdir /opt/Franz
+sudo tar xvzf ${DOWNLOADS}/franz.tgz -C /opt/Franz
+cat files/Franz.desktop | sudo tee /usr/share/applications/Franz.desktop
 
 info "Installing Android Tools"
 sudo apt-get install -y adb fastboot
@@ -212,6 +215,13 @@ if [ ! -f ${DOWNLOADS}/jd-gui.deb ]; then
 	curl -C - -L https://github.com/java-decompiler/jd-gui/releases/download/v1.4.0/jd-gui_1.4.0-0_all.deb \
 		-o ${DOWNLOADS}/jd-gui.deb
 	sudo dpkg -i ${DOWNLOADS}/jd-gui.deb
+fi
+
+info "Installing Intel Graphics Update Tool"
+if [ ! -f ${DOWNLOADS}/intel-gut.deb ]; then
+	curl -C - -L https://download.01.org/gfx/ubuntu/16.04/main/pool/main/i/intel-graphics-update-tool/intel-graphics-update-tool_2.0.2_amd64.deb \
+		-o ${DOWNLOADS}/intel-gut.deb
+	sudo dpkg -i ${DOWNLOADS}/intel-gut.deb
 fi
 
 info "Cleaning up"
