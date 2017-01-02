@@ -231,5 +231,8 @@ if [ ! -f ${DOWNLOADS}/jd-gui.deb ]; then
 	sudo dpkg -i ${DOWNLOADS}/jd-gui.deb
 fi
 
+info "Installing power management stuff"
+sudo apt-get install -y powertop
+
 info "Cleaning up"
 sudo apt-get autoremove -y
