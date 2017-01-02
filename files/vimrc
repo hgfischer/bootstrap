@@ -63,6 +63,8 @@ set background=dark
 " Ignore background settings from colorscheme
 hi Normal ctermbg=none
 
+colorscheme jellybeans
+
 " Disable code folding
 set nofoldenable
 

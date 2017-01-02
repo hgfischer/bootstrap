@@ -60,7 +60,8 @@ sudo add-apt-repository -y ppa:webupd8team/java
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | \
 	sudo tee /etc/apt/sources.list.d/google-chrome.list
-# wget -q -O - --no-check-certificate https://download.01.org/gfx/RPM-GPG-KEY-ilg-4 | sudo apt-key add -
+echo "deb [arch=amd64] http://dl.google.com/linux/talkplugin/deb/ stable main" | \
+	sudo tee /etc/apt/sources.list.d/google-talkplugin.list
 sudo apt-get update
 
 
@@ -71,6 +72,9 @@ sudo apt-get install -y vim-gtk
 
 info "Installing Google Chrome"
 sudo apt-get install -y google-chrome-stable
+
+info "Installing Google Talk Plugin"
+sudo apt-get install -y google-talkplugin
 
 info "Installing terminator"
 sudo apt-get install -y terminator
@@ -209,19 +213,19 @@ sudo apt-get install -y ack-grep
 info "Installing sqlite3"
 sudo apt-get install -y sqlite3
 
+info "Installing some fonts"
+sudo apt-get install -y fonts-inconsolata fonts-fantasque-sans fonts-jura ttf-mscorefonts-installer
+
+[ -d /usr/share/fonts/opentype ] || sudo mkdir /usr/share/fonts/opentype
+sudo git clone https://github.com/adobe-fonts/source-code-pro.git /usr/share/fonts/opentype/scp
+sudo fc-cache -f -v
+
 info "Installing jd-gui"
 if [ ! -f ${DOWNLOADS}/jd-gui.deb ]; then
 	curl -C - -L https://github.com/java-decompiler/jd-gui/releases/download/v1.4.0/jd-gui_1.4.0-0_all.deb \
 		-o ${DOWNLOADS}/jd-gui.deb
 	sudo dpkg -i ${DOWNLOADS}/jd-gui.deb
 fi
-
-# info "Installing Intel Graphics Update Tool"
-# if [ ! -f ${DOWNLOADS}/intel-gut.deb ]; then
-# 	curl -C - -L https://download.01.org/gfx/ubuntu/16.04/main/pool/main/i/intel-graphics-update-tool/intel-graphics-update-tool_2.0.2_amd64.deb \
-# 		-o ${DOWNLOADS}/intel-gut.deb
-# 	sudo dpkg -i ${DOWNLOADS}/intel-gut.deb
-# fi
 
 info "Cleaning up"
 sudo apt-get autoremove -y
