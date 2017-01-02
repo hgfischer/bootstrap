@@ -62,6 +62,7 @@ echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | \
 	sudo tee /etc/apt/sources.list.d/google-chrome.list
 echo "deb [arch=amd64] http://dl.google.com/linux/talkplugin/deb/ stable main" | \
 	sudo tee /etc/apt/sources.list.d/google-talkplugin.list
+sudo add-apt-repository ppa:niko2040/e19
 sudo apt-get update
 
 
@@ -78,6 +79,9 @@ sudo apt-get install -y google-talkplugin
 
 info "Installing terminator"
 sudo apt-get install -y terminator
+
+info "Installing Enlightenment"
+sudo apt-get install -y enlightenment terminology
 
 info "Installing curl"
 sudo apt-get install -y curl
