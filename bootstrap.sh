@@ -62,7 +62,7 @@ echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | \
 	sudo tee /etc/apt/sources.list.d/google-chrome.list
 echo "deb [arch=amd64] http://dl.google.com/linux/talkplugin/deb/ stable main" | \
 	sudo tee /etc/apt/sources.list.d/google-talkplugin.list
-sudo add-apt-repository ppa:niko2040/e19
+sudo add-apt-repository -y ppa:niko2040/e19
 sudo apt-get update
 
 
