@@ -234,5 +234,8 @@ fi
 info "Installing power management stuff"
 sudo apt-get install -y powertop
 
+info "Installing sysfs utils"
+sudo apt-get install -y sysfsutils
+
 info "Cleaning up"
 sudo apt-get autoremove -y
