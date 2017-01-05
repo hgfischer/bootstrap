@@ -1,6 +1,7 @@
 #!/bin/bash
 
-DOWNLOADS=~/Downloads
+DOWNLOADS=~/Downloads/.bootstrap
+mkdir -p $DOWNLOADS
 
 source /etc/os-release
 
