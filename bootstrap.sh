@@ -237,5 +237,11 @@ sudo apt-get install -y powertop
 info "Installing sysfs utils"
 sudo apt-get install -y sysfsutils
 
+info "Installing deps for gnome panels" 
+sudo apt-get install -y gir1.2-gtop-2.0 vnstat vnstati
+
+info "Installing tool for gnome-open" 
+sudo apt-get install -y libgnome2-bin
+
 info "Cleaning up"
 sudo apt-get autoremove -y
