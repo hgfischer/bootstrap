@@ -244,6 +244,9 @@ sudo apt-get install -y gir1.2-gtop-2.0 vnstat vnstati
 info "Installing tool for gnome-open" 
 sudo apt-get install -y libgnome2-bin
 
+info "Installing sysstat"
+sudo apt-get install -y sysstat
+
 info "Cleaning up"
 sudo apt-get autoremove -y
 
