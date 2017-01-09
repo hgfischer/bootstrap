@@ -246,3 +246,7 @@ sudo apt-get install -y libgnome2-bin
 
 info "Cleaning up"
 sudo apt-get autoremove -y
+
+info "Adding tmux-cssh"
+sudo wget https://raw.githubusercontent.com/dennishafemann/tmux-cssh/master/tmux-cssh -O /usr/local/bin/tmux-cssh
+sudo chmod +x /usr/local/bin/tmux-cssh
