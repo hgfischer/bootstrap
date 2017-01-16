@@ -81,9 +81,6 @@ sudo apt-get install -y google-talkplugin
 info "Installing terminator"
 sudo apt-get install -y terminator
 
-info "Installing Enlightenment"
-sudo apt-get install -y enlightenment terminology
-
 info "Installing curl"
 sudo apt-get install -y curl
 
