@@ -105,14 +105,6 @@ sudo apt-get install -y tmux
 info "Installing xclip"
 sudo apt-get install -y xclip
 
-if [ ! -d ~/.go ]; then
-	info "Installing golang"
-	GO_VER=1.8beta2
-	TARBALL="go${GO_VER}.linux-amd64.tar.gz"
-	curl -C - https://storage.googleapis.com/golang/${TARBALL} -o ${DOWNLOADS}/${TARBALL}
-	tar xvzf ${DOWNLOADS}/${TARBALL} -C ${DOWNLOADS}
-	mv ${DOWNLOADS}/go ~/.go
-fi
 
 info "Configuring vim"
 cp files/vimrc ~/.vimrc
