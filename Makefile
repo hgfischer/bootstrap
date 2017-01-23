@@ -18,6 +18,7 @@ GO_VER := 1.8rc2
 TARBALL := go$(GO_VER).linux-amd64.tar.gz
 
 golang: downloads_dir
-	curl -C - https://storage.googleapis.com/golang/${TARBALL} -o $(DOWNLOADS)/$(TARBALL)
+	rm -rf ~/.go
+	curl https://storage.googleapis.com/golang/${TARBALL} -o $(DOWNLOADS)/$(TARBALL)
 	tar xvzf $(DOWNLOADS)/$(TARBALL) -C $(DOWNLOADS)
 	mv $(DOWNLOADS)/go ~/.go
