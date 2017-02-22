@@ -14,11 +14,12 @@ docker:
 	sudo apt-get install -y docker-engine
 
 
-GO_VER := 1.8rc2
+GO_VER := 1.8
 TARBALL := go$(GO_VER).linux-amd64.tar.gz
 
 golang: downloads_dir
 	rm -rf ~/.go
 	curl https://storage.googleapis.com/golang/${TARBALL} -o $(DOWNLOADS)/$(TARBALL)
 	tar xvzf $(DOWNLOADS)/$(TARBALL) -C $(DOWNLOADS)
+	rm -rf ~/.go
 	mv $(DOWNLOADS)/go ~/.go
