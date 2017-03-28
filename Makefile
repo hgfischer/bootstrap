@@ -191,7 +191,7 @@ curl:
 
 misc:
 	sudo apt-get install -y \
-		python-software-properties
+		python-software-properties \
 		build-essential \
 		exuberant-ctags \
 		htop \
