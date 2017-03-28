@@ -47,7 +47,7 @@ git:
 
 
 vim:
-	sudo add-apt-repository ppa:jonathonf/vim
+	sudo add-apt-repository -y ppa:jonathonf/vim
 	sudo apt-get update
 	sudo apt-get remove -y vim-tiny
 	sudo apt-get install -y vim-nox
@@ -95,7 +95,7 @@ update-vim-plugins:
 
 
 chrome:
-	wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -y -
+	wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 	echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | \
 		sudo tee /etc/apt/sources.list.d/google-chrome.list
 	echo "deb [arch=amd64] http://dl.google.com/linux/talkplugin/deb/ stable main" | \
@@ -178,6 +178,18 @@ fonts: /usr/share/fonts/opentype/scp /usr/share/fonts/opentype/FiraCode
 		fonts-fantasque-sans \
 		fonts-jura \
 		ttf-mscorefonts-installer
+
+
+themes:
+	sudo add-apt-repository -y ppa:numix/ppa
+	sudo add-apt-repository -y ppa:noobslab/themes
+	sudo add-apt-repository -y ppa:noobslab/icons
+	sudo apt-get update
+	sudo apt-get install -y \
+		unity-tweak-tool \
+		numix-icon-theme-circle \
+		arc-theme \
+		arc-icons
 
 
 tmux-cssh:
