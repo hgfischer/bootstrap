@@ -4,7 +4,7 @@ NAME          := Herbert Fischer
 EMAIL         := herbert.fischer@
 KERNEL_VER    := $(shell uname -r)
 DOWNLOADS_DIR := ~/Downloads/.bootstrap
-GO_VER        := 1.8
+GO_VER        := 1.8.1
 VIMPLUGINS    := ~/.vim/pack/plugins/start
 VAGRANT_VER   := 1.9.3
 FRANZ_VER     := 4.0.4
@@ -16,7 +16,7 @@ $(DOWNLOADS_DIR):
 
 bash:
 	mkdir -p ~/.profile.d/
-	cp files/bashrc ~/.bashrc_TODO
+	cp files/bashrc ~/.bashrc
 	cp files/profile.d/* ~/.profile.d/
 
 
