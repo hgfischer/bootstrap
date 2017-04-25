@@ -171,7 +171,13 @@ franz:
 	sudo mv FiraCode/distr/otf /usr/share/fonts/opentype/FiraCode
 
 
-fonts: /usr/share/fonts/opentype/scp /usr/share/fonts/opentype/FiraCode
+/usr/share/fonts/truetype/go-fonts:
+	cd /tmp && rm -rf image && \
+	git clone https://go.googlesource.com/image && \
+	sudo mv image/font/gofont/ttfs /usr/share/fonts/truetype/go-fonts
+
+
+fonts: /usr/share/fonts/opentype/scp /usr/share/fonts/opentype/FiraCode /usr/share/fonts/truetype/go-fonts
 	sudo fc-cache -f -v
 	sudo apt-get install -y \
 		fonts-inconsolata \
