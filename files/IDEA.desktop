@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=IntelliJ IDEA
+Exec=/opt/ideaIC/bin/idea.sh
+Icon=/opt/ideaIC/bin/idea.png
+Type=Application
+StartupNotify=true

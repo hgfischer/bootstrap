@@ -8,6 +8,7 @@ GO_VER        := 1.8.1
 VIMPLUGINS    := ~/.vim/pack/plugins/start
 VAGRANT_VER   := 1.9.3
 FRANZ_VER     := 4.0.4
+INTELLIJ_VER  := 2017.1.2
 
 
 $(DOWNLOADS_DIR):
@@ -33,7 +34,7 @@ docker:
 
 GO_TARBALL = go$(GO_VER).linux-amd64.tar.gz
 golang: curl $(DOWNLOADS_DIR)
-	curl https://storage.googleapis.com/golang/${GO_TARBALL} -o $(DOWNLOADS_DIR)/$(GO_TARBALL)
+	curl https://storage.googleapis.com/golang/$(GO_TARBALL) -o $(DOWNLOADS_DIR)/$(GO_TARBALL)
 	tar xvzf $(DOWNLOADS_DIR)/$(GO_TARBALL) -C $(DOWNLOADS_DIR)
 	rm -rf ~/.go
 	mv $(DOWNLOADS_DIR)/go ~/.go
@@ -128,12 +129,11 @@ virtualbox: $(DOWNLOADS_DIR)
 	sudo vboxmanage extpack install --replace `ls -1 *.vbox-extpack`
 
 
-VAGRANT_PKG = vagrant_${VAGRANT_VER}_x86_64.deb
+VAGRANT_PKG = vagrant_$(VAGRANT_VER)_x86_64.deb
 vagrant: $(DOWNLOADS_DIR)
 	cd $(DOWNLOADS_DIR) && \
-	wget https://releases.hashicorp.com/vagrant/${VAGRANT_VER}/${VAGRANT_PKG} \
-		-O ${VAGRANT_PKG} && \
-	sudo dpkg -i ${VAGRANT_PKG}
+	wget https://releases.hashicorp.com/vagrant/$(VAGRANT_VER)/$(VAGRANT_PKG) -O $(VAGRANT_PKG) && \
+	sudo dpkg -i $(VAGRANT_PKG)
 
 
 vscode: $(DOWNLOADS_DIR)
@@ -152,7 +152,7 @@ sublime3: $(DOWNLOADS_DIR)
 
 franz:
 	cd $(DOWNLOADS_DIR) && \
-	wget https://github.com/meetfranz/franz-app/releases/download/${FRANZ_VER}/Franz-linux-x64-${FRANZ_VER}.tgz \
+	wget https://github.com/meetfranz/franz-app/releases/download/$(FRANZ_VER)/Franz-linux-x64-$(FRANZ_VER).tgz \
 		-O franz.tgz && \
 	sudo mkdir -p /opt/Franz && \
 	sudo tar xvzf franz.tgz -C /opt/Franz
@@ -226,3 +226,15 @@ misc:
 		powertop \
 		sysfsutils \
 		sysstat
+
+palm-detect:
+	INPUT_ID=`xinput list | grep Touchpad | cut -d= -f2 | awk '{print$$1}'`
+	echo $(ID)
+
+INTELLIJ_TARBALL = ideaIC-$(INTELLIJ_VER).tar.gz
+INTELLIJ_DIR = /opt/ideaIC
+intellij: $(DOWNLOADS_DIR)
+	wget -c https://download.jetbrains.com/idea/$(INTELLIJ_TARBALL) -O $(DOWNLOADS_DIR)/$(INTELLIJ_TARBALL)
+	sudo rm -rf $(INTELLIJ_DIR) && sudo mkdir -p $(INTELLIJ_DIR)
+	sudo tar xvzf $(DOWNLOADS_DIR)/$(INTELLIJ_TARBALL) --strip 1 -C $(INTELLIJ_DIR)
+	cat files/IDEA.desktop | sudo tee /usr/share/applications/IDEA.desktop
