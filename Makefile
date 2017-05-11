@@ -48,7 +48,7 @@ git:
 
 
 vim:
-	sudo add-apt-repository -y ppa:jonathonf/vim
+	#sudo add-apt-repository -y ppa:jonathonf/vim
 	sudo apt-get update
 	sudo apt-get remove -y vim-tiny
 	sudo apt-get install -y vim-nox
@@ -90,8 +90,8 @@ vim-plugins:
 
 update-vim-plugins:
 	cd $(VIMPLUGINS) && \
-	git submodule update --remote --merge \
-	git add -A \
+	git submodule update --remote --merge && \
+	git add -A && \
 	git commit -m 'Updated...'
 
 
