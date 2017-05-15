@@ -9,6 +9,7 @@ VIMPLUGINS    := ~/.vim/pack/plugins/start
 VAGRANT_VER   := 1.9.3
 FRANZ_VER     := 4.0.4
 INTELLIJ_VER  := 2017.1.2
+LSB_CODENAME  := $(shell lsb_release -s -c)
 
 
 $(DOWNLOADS_DIR):
@@ -238,3 +239,14 @@ intellij: $(DOWNLOADS_DIR)
 	sudo rm -rf $(INTELLIJ_DIR) && sudo mkdir -p $(INTELLIJ_DIR)
 	sudo tar xvzf $(DOWNLOADS_DIR)/$(INTELLIJ_TARBALL) --strip 1 -C $(INTELLIJ_DIR)
 	cat files/IDEA.desktop | sudo tee /usr/share/applications/IDEA.desktop
+
+
+i3:
+	/usr/lib/apt/apt-helper download-file \
+		http://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2017.01.02_all.deb \
+		$(DOWNLOADS_DIR)/keyring.deb \
+		SHA256:4c3c6685b1181d83efe3a479c5ae38a2a44e23add55e16a328b8c8560bf05e5f && \
+	sudo apt install $(DOWNLOADS_DIR)/keyring.deb && \
+	echo "deb http://debian.sur5r.net/i3/ $(LSB_CODENAME) universe" | sudo tee /etc/apt/sources.list.d/sur5r-i3.list && \
+	sudo apt update && \
+	sudo apt -y install i3
