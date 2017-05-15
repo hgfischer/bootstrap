@@ -49,7 +49,7 @@ git:
 
 
 vim:
-	if [ "$(shell lsb_release -c -s)" == "xenial" ]; then \
+	if [ "_$(LSB_CODENAME)" == "_xenial" ]; then \
 		sudo add-apt-repository -y ppa:jonathonf/vim; \
 		sudo apt-get update; \
 	fi;
@@ -114,10 +114,14 @@ terminator:
 	sudo apt-get install -y terminator
 
 
-java:
+oracle-java:
 	sudo add-apt-repository -y ppa:webupd8team/java
 	sudo apt-get update
 	sudo apt-get -y install oracle-java8-installer oracle-java8-set-default
+
+
+java:
+	sudo apt-get -y install openjdk-8-jdk openjdk-8-doc
 
 
 virtualbox: $(DOWNLOADS_DIR)
@@ -189,18 +193,6 @@ fonts: /usr/share/fonts/opentype/scp /usr/share/fonts/opentype/FiraCode /usr/sha
 		ttf-mscorefonts-installer
 
 
-themes:
-	sudo add-apt-repository -y ppa:numix/ppa
-	sudo add-apt-repository -y ppa:noobslab/themes
-	sudo add-apt-repository -y ppa:noobslab/icons
-	sudo apt-get update
-	sudo apt-get install -y \
-		unity-tweak-tool \
-		numix-icon-theme-circle \
-		arc-theme \
-		arc-icons
-
-
 tmux-cssh:
 	sudo wget https://raw.githubusercontent.com/dennishafemann/tmux-cssh/master/tmux-cssh -O /usr/local/bin/tmux-cssh
 	sudo chmod +x /usr/local/bin/tmux-cssh
@@ -230,9 +222,6 @@ misc:
 		sysfsutils \
 		sysstat
 
-palm-detect:
-	INPUT_ID=`xinput list | grep Touchpad | cut -d= -f2 | awk '{print$$1}'`
-	echo $(ID)
 
 INTELLIJ_TARBALL = ideaIC-$(INTELLIJ_VER).tar.gz
 INTELLIJ_DIR = /opt/ideaIC
@@ -252,3 +241,6 @@ i3:
 	echo "deb http://debian.sur5r.net/i3/ $(LSB_CODENAME) universe" | sudo tee /etc/apt/sources.list.d/sur5r-i3.list && \
 	sudo apt update && \
 	sudo apt -y install i3
+
+
+all: bash docker golang git vim chrome terminator java virtualbox vagrant vscode sublime3 franz fonts tmux-cssh curl misc intellij i3
