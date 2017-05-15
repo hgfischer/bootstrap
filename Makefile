@@ -49,8 +49,10 @@ git:
 
 
 vim:
-	#sudo add-apt-repository -y ppa:jonathonf/vim
-	sudo apt-get update
+	if [ "$(shell lsb_release -c -s)" == "xenial" ]; then \
+		sudo add-apt-repository -y ppa:jonathonf/vim; \
+		sudo apt-get update; \
+	fi;
 	sudo apt-get remove -y vim-tiny
 	sudo apt-get install -y vim-nox
 	sudo apt-get install -y vim-gtk
