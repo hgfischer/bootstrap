@@ -250,4 +250,8 @@ ansible:
 	sudo apt-get install ansible
 
 
-all: bash docker golang git vim chrome terminator java virtualbox vagrant vscode sublime3 franz fonts tmux-cssh curl misc intellij i3 ansible
+shutter:
+	sudo apt-get install shutter -y
+
+
+all: bash docker golang git vim chrome terminator java virtualbox vagrant vscode sublime3 franz fonts tmux-cssh curl misc intellij i3 ansible shutter
