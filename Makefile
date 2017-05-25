@@ -273,4 +273,11 @@ vlc:
 	sudo apt-get -y install vlc browser-plugin-vlc
 
 
-all: bash docker golang git vim chrome terminator java virtualbox vagrant vscode sublime3 franz fonts tmux-cssh curl misc intellij i3 ansible shutter monitor_wakeup_fix handbrake ffmpeg vlc
+mkvtoolnix:
+	wget -q -O - https://mkvtoolnix.download/gpg-pub-moritzbunkus.txt | sudo apt-key add -
+	echo "deb http://mkvtoolnix.download/ubuntu/$(LSB_CODENAME)/ ./" | sudo tee /etc/apt/sources.list.d/bunkus.org.list
+	sudo apt-get update
+	sudo apt-get install mkvtoolnix mkvtoolnix-gui mediainfo-gui
+
+
+all: bash docker golang git vim chrome terminator java virtualbox vagrant vscode sublime3 franz fonts tmux-cssh curl misc intellij i3 ansible shutter monitor_wakeup_fix handbrake ffmpeg vlc mkvtoolnix
