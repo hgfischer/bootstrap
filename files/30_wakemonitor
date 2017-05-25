@@ -1,0 +1,14 @@
+#!/bin/bash
+
+case "$1" in
+suspend | hibernate)
+# executed on suspend
+;;
+resume | thaw) 
+# executed on resume
+/usr/bin/xset dpms force on
+/usr/bin/xset dpms force on
+;;
+*)
+;;
+esac
