@@ -292,4 +292,12 @@ yarn:
 	sudo apt-get install -y yarn 
 
 
-all: bash docker golang git vim chrome terminator java virtualbox vagrant vscode sublime3 franz fonts tmux-cssh curl misc intellij i3 ansible shutter monitor_wakeup_fix handbrake ffmpeg vlc mkvtoolnix nodejs yarn
+glances:
+	sudo apt-get install -y glances
+
+
+clipit:
+	sudo apt-get install -y clipit
+
+
+all: bash docker golang git vim chrome terminator java virtualbox vagrant vscode sublime3 franz fonts tmux-cssh curl misc intellij i3 ansible shutter monitor_wakeup_fix handbrake ffmpeg vlc mkvtoolnix nodejs yarn glances clipit
