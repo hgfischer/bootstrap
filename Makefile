@@ -300,4 +300,13 @@ clipit:
 	sudo apt-get install -y clipit
 
 
-all: bash docker golang git vim chrome terminator java virtualbox vagrant vscode sublime3 franz fonts tmux-cssh curl misc intellij i3 ansible shutter monitor_wakeup_fix handbrake ffmpeg vlc mkvtoolnix nodejs yarn glances clipit
+gimp:
+	sudo apt-get install -y gimp
+
+
+gmic: gimp
+	wget -c http://gmic.eu/files/prerelease_linux/gmic_ubuntu_$(LSB_CODENAME)_amd64.deb -O $(DOWNLOADS_DIR)/gmic.deb
+	sudo dpkg -i $(DOWNLOADS_DIR)/gmic.deb
+
+
+all: bash docker golang git vim chrome terminator java virtualbox vagrant vscode sublime3 franz fonts tmux-cssh curl misc intellij i3 ansible shutter monitor_wakeup_fix handbrake ffmpeg vlc mkvtoolnix nodejs yarn glances clipit gmic
