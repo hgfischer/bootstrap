@@ -4,7 +4,7 @@ case $- in
       *) return;;
 esac
 
-export LC_ALL=en_CA.UTF-8
+export LC_ALL=en_US.UTF-8
 
 export HISTTIMEFORMAT="%F %T "
 export HISTSIZE=500
