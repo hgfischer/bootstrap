@@ -11,6 +11,8 @@ FRANZ_VER     := 4.0.4
 INTELLIJ_VER  := 2017.1.2
 LSB_CODENAME  := $(shell lsb_release -s -c)
 
+APT_INSTALL := $(APT_INSTALL)
+
 
 $(DOWNLOADS_DIR):
 	mkdir -p $(DOWNLOADS_DIR)
@@ -33,8 +35,7 @@ docker:
 	echo deb https://apt.dockerproject.org/repo ubuntu-xenial main | \
 		sudo tee /etc/apt/sources.list.d/docker.list
 	sudo apt-get update
-	sudo apt-get install -y linux-image-extra-$(shell uname -r)
-	sudo apt-get install -y docker-engine
+	$(APT_INSTALL) linux-image-extra-$(shell uname -r) docker-engine
 
 
 
@@ -47,7 +48,7 @@ golang: curl $(DOWNLOADS_DIR)
 
 
 git:
-	sudo apt-get install -y git
+	$(APT_INSTALL) git
 	git config --global user.name $(NAME)
 	git config --global user.email $(EMAIL)
 	git config --global push.default simple
@@ -59,8 +60,8 @@ vim:
 		sudo apt-get update; \
 	fi;
 	sudo apt-get remove -y vim-tiny
-	sudo apt-get install -y vim-nox
-	sudo apt-get install -y vim-gtk
+	$(APT_INSTALL) vim-nox
+	$(APT_INSTALL) vim-gtk
 
 
 vim-plugins:
@@ -110,23 +111,23 @@ chrome:
 	echo "deb [arch=amd64] http://dl.google.com/linux/talkplugin/deb/ stable main" | \
 		sudo tee /etc/apt/sources.list.d/google-talkplugin.list
 	sudo apt-get update
-	sudo apt-get install -y google-chrome-stable google-talkplugin
+	$(APT_INSTALL) google-chrome-stable google-talkplugin
 
 
 terminator:
 	sudo add-apt-repository -y ppa:gnome-terminator/nightly-gtk3
 	sudo apt-get update
-	sudo apt-get install -y terminator
+	$(APT_INSTALL) terminator
 
 
 oracle-java:
 	sudo add-apt-repository -y ppa:webupd8team/java
 	sudo apt-get update
-	sudo apt-get -y install oracle-java8-installer oracle-java8-set-default
+	$(APT_INSTALL) oracle-java8-installer oracle-java8-set-default
 
 
 java:
-	sudo apt-get -y install openjdk-8-jdk openjdk-8-doc
+	$(APT_INSTALL) openjdk-8-jdk openjdk-8-doc
 
 
 virtualbox: $(DOWNLOADS_DIR)
@@ -135,7 +136,7 @@ virtualbox: $(DOWNLOADS_DIR)
 	wget -q -O - https://www.virtualbox.org/download/oracle_vbox_2016.asc | \
 		sudo apt-key add -
 	sudo apt-get update
-	sudo apt-get install -y virtualbox-5.1
+	$(APT_INSTALL) virtualbox-5.1
 	cd $(DOWNLOADS_DIR) && \
 	wget -c http://download.virtualbox.org/virtualbox/5.1.18/Oracle_VM_VirtualBox_Extension_Pack-5.1.18-114002.vbox-extpack && \
 	sudo vboxmanage extpack install --replace `ls -1 *.vbox-extpack`
@@ -191,7 +192,7 @@ franz:
 
 fonts: /usr/share/fonts/opentype/scp /usr/share/fonts/opentype/FiraCode /usr/share/fonts/truetype/go-fonts
 	sudo fc-cache -f -v
-	sudo apt-get install -y \
+	$(APT_INSTALL) \
 		fonts-inconsolata \
 		fonts-fantasque-sans \
 		fonts-jura \
@@ -204,11 +205,11 @@ tmux-cssh:
 
 
 curl:
-	sudo apt-get install -y curl
+	$(APT_INSTALL) curl
 
 
 misc:
-	sudo apt-get install -y \
+	$(APT_INSTALL) \
 		python-software-properties \
 		build-essential \
 		exuberant-ctags \
@@ -242,66 +243,66 @@ i3:
 		http://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2017.01.02_all.deb \
 		$(DOWNLOADS_DIR)/keyring.deb \
 		SHA256:4c3c6685b1181d83efe3a479c5ae38a2a44e23add55e16a328b8c8560bf05e5f && \
-	sudo apt install $(DOWNLOADS_DIR)/keyring.deb && \
+	$(APT_INSTALL) $(DOWNLOADS_DIR)/keyring.deb && \
 	echo "deb http://debian.sur5r.net/i3/ $(LSB_CODENAME) universe" | sudo tee /etc/apt/sources.list.d/sur5r-i3.list && \
 	sudo apt update && \
-	sudo apt -y install i3
+	$(APT_INSTALL) i3
 
 
 ansible:
 	echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" | sudo tee /etc/apt/sources.list.d/ansible.list
 	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
 	sudo apt-get update
-	sudo apt-get install ansible
+	$(APT_INSTALL) ansible
 
 
 shutter:
-	sudo apt-get install shutter -y
+	$(APT_INSTALL) shutter
 
 
 handbrake:
 	sudo add-apt-repository ppa:stebbins/handbrake-releases -y
 	sudo apt-get update 
-	sudo apt-get -y install handbrake
+	$(APT_INSTALL) handbrake
 
 
 ffmpeg:
-	sudo apt-get -y install ffmpeg
+	$(APT_INSTALL) ffmpeg
 
 
 vlc:
-	sudo apt-get -y install vlc browser-plugin-vlc
+	$(APT_INSTALL) vlc browser-plugin-vlc
 
 
 mkvtoolnix:
 	wget -q -O - https://mkvtoolnix.download/gpg-pub-moritzbunkus.txt | sudo apt-key add -
 	echo "deb http://mkvtoolnix.download/ubuntu/$(LSB_CODENAME)/ ./" | sudo tee /etc/apt/sources.list.d/bunkus.org.list
 	sudo apt-get update
-	sudo apt-get install mkvtoolnix mkvtoolnix-gui mediainfo-gui
+	$(APT_INSTALL) mkvtoolnix mkvtoolnix-gui mediainfo-gui
 
 
 nodejs:
 	curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-	sudo apt-get install -y nodejs
+	$(APT_INSTALL) nodejs
 
 
 yarn:
 	curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 	echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 	sudo apt-get update
-	sudo apt-get install -y yarn 
+	$(APT_INSTALL) yarn 
 
 
 glances:
-	sudo apt-get install -y glances
+	$(APT_INSTALL) glances
 
 
 clipit:
-	sudo apt-get install -y clipit
+	$(APT_INSTALL) clipit
 
 
 gimp:
-	sudo apt-get install -y gimp
+	$(APT_INSTALL) gimp
 
 
 gmic: gimp
@@ -312,11 +313,15 @@ gmic: gimp
 dolphin:
 	sudo apt-add-repository -y ppa:dolphin-emu/ppa
 	sudo apt update
-	sudo apt install dolphin-emu -y
+	$(APT_INSTALL) dolphin-emu 
 
 
 topicons:
-	sudo apt install gnome-shell-extension-top-icons-plus
+	$(APT_INSTALL) gnome-shell-extension-top-icons-plus
 
 
-all: bash docker golang git vim chrome terminator java virtualbox vagrant vscode sublime3 franz fonts tmux-cssh curl misc intellij i3 ansible shutter monitor_wakeup_fix handbrake ffmpeg vlc mkvtoolnix nodejs yarn glances clipit gmic topicons
+nmap:
+	$(APT_INSTALL) nmap
+
+
+all: bash docker golang git vim chrome terminator java virtualbox vagrant vscode sublime3 franz fonts tmux-cssh curl misc intellij i3 ansible shutter monitor_wakeup_fix handbrake ffmpeg vlc mkvtoolnix nodejs yarn glances clipit gmic topicons nmap
