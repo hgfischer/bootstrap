@@ -250,7 +250,7 @@ i3:
 	$(APT_INSTALL) $(DOWNLOADS_DIR)/keyring.deb 
 	echo "deb http://debian.sur5r.net/i3/ $(LSB_CODENAME) universe" | sudo tee /etc/apt/sources.list.d/sur5r-i3.list
 	$(APT_UPDATE)  
-	$(APT_INSTALL) i3 feh arandr lxappearance
+	$(APT_INSTALL) i3 feh arandr lxappearance rofi compton
 
 
 ansible:
