@@ -187,8 +187,14 @@ franz:
 	git clone https://go.googlesource.com/image && \
 	sudo mv image/font/gofont/ttfs /usr/share/fonts/truetype/go-fonts
 
+/usr/share/fonts/truetype/YosemiteSanFrancisco:
+	cd /tmp && rm -rf YosemiteSanFranciscoFont && \
+	git clone https://github.com/supermarin/YosemiteSanFranciscoFont.git && \
+	sudo mkdir /usr/share/fonts/truetype/YosemiteSanFranciscoFont && \
+	sudo mv YosemiteSanFranciscoFont/*.ttf /usr/share/fonts/truetype/YosemiteSanFranciscoFont
 
-fonts: /usr/share/fonts/opentype/scp /usr/share/fonts/opentype/FiraCode /usr/share/fonts/truetype/go-fonts
+
+fonts: /usr/share/fonts/opentype/scp /usr/share/fonts/opentype/FiraCode /usr/share/fonts/truetype/go-fonts /usr/share/fonts/truetype/YosemiteSanFrancisco
 	sudo fc-cache -f -v
 	$(APT_INSTALL) \
 		fonts-inconsolata \
@@ -244,7 +250,7 @@ i3:
 	$(APT_INSTALL) $(DOWNLOADS_DIR)/keyring.deb 
 	echo "deb http://debian.sur5r.net/i3/ $(LSB_CODENAME) universe" | sudo tee /etc/apt/sources.list.d/sur5r-i3.list
 	$(APT_UPDATE)  
-	$(APT_INSTALL) i3
+	$(APT_INSTALL) i3 feh arandr lxappearance
 
 
 ansible:
