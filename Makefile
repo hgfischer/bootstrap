@@ -136,9 +136,9 @@ virtualbox: $(DOWNLOADS_DIR)
 	wget -q -O - https://www.virtualbox.org/download/oracle_vbox_2016.asc | \
 		sudo apt-key add -
 	$(APT_UPDATE)
-	$(APT_INSTALL) virtualbox-5.1
+	$(APT_INSTALL) virtualbox-5.2
 	cd $(DOWNLOADS_DIR)                                                                                                     && \
-	wget -c http://download.virtualbox.org/virtualbox/5.1.18/Oracle_VM_VirtualBox_Extension_Pack-5.1.18-114002.vbox-extpack && \
+	wget -c http://download.virtualbox.org/virtualbox/5.2.6/Oracle_VM_VirtualBox_Extension_Pack-5.2.6-120293.vbox-extpack && \
 	sudo vboxmanage extpack install --replace `ls -1 *.vbox-extpack`
 
 
