@@ -7,7 +7,7 @@ DOWNLOADS_DIR := ~/Downloads/.bootstrap
 GO_VER        := 1.9.2
 VIMPLUGINS    := ~/.vim/pack/plugins/start
 VAGRANT_VER   := 2.0.1
-FRANZ_VER     := 4.0.4
+FRANZ_VER     := 5.0.0-beta.15
 INTELLIJ_VER  := 2017.2.3
 LSB_CODENAME  := $(shell lsb_release -s -c)
 APT_UPDATE    := sudo apt update
@@ -55,7 +55,7 @@ git:
 
 
 vim:
-	if [ "_$(LSB_CODENAME)" == "_xenial" ]; then \
+	if [ "0$(LSB_CODENAME)" == "0xenial" ]; then \
 		sudo add-apt-repository -y ppa:jonathonf/vim; \
 		$(APT_UPDATE); \
 	fi;
@@ -115,8 +115,10 @@ chrome:
 
 
 terminator:
-	sudo add-apt-repository -y ppa:gnome-terminator/nightly-gtk3
-	$(APT_UPDATE)
+	if [ "0$(LSB_CODENAME)" == "0xenial" ]; then \
+		sudo add-apt-repository -y ppa:gnome-terminator/nightly-gtk3; \
+		$(APT_UPDATE); \
+	fi;
 	$(APT_INSTALL) terminator
 
 
@@ -127,7 +129,7 @@ oracle-java:
 
 
 java:
-	$(APT_INSTALL) openjdk-8-jdk openjdk-8-doc
+	$(APT_INSTALL) openjdk-9-jdk openjdk-9-doc
 
 
 virtualbox: $(DOWNLOADS_DIR)
@@ -162,12 +164,11 @@ sublime3: $(DOWNLOADS_DIR)
 
 
 franz:
+	sudo apt-get install gconf2
 	cd $(DOWNLOADS_DIR) && \
-	wget https://github.com/meetfranz/franz-app/releases/download/$(FRANZ_VER)/Franz-linux-x64-$(FRANZ_VER).tgz \
-		-O franz.tgz && \
-	sudo mkdir -p /opt/Franz && \
-	sudo tar xvzf franz.tgz -C /opt/Franz
-	cat files/Franz.desktop | sudo tee /usr/share/applications/Franz.desktop
+	wget https://github.com/meetfranz/franz/releases/download/v$(FRANZ_VER)/franz_$(FRANZ_VER)_amd64.deb \
+		-O franz.deb && \
+	sudo dpkg -i franz.deb
 
 
 /usr/share/fonts/opentype/scp:
@@ -226,7 +227,6 @@ misc:
 		bless \
 		ghex \
 		dhex \
-		ack-grep \
 		sqlite3 \
 		powertop \
 		sysfsutils \
@@ -265,8 +265,10 @@ shutter:
 
 
 handbrake:
-	sudo add-apt-repository ppa:stebbins/handbrake-releases -y
-	$(APT_UPDATE) 
+	if [ "0$(LSB_CODENAME)" == "0xenial" ]; then \
+		sudo add-apt-repository ppa:stebbins/handbrake-releases -y; \
+		$(APT_UPDATE); \
+	fi;
 	$(APT_INSTALL) handbrake
 
 
@@ -311,6 +313,7 @@ gimp:
 
 gmic: gimp
 	wget -c http://gmic.eu/files/prerelease_linux/gmic_ubuntu_$(LSB_CODENAME)_amd64.deb -O $(DOWNLOADS_DIR)/gmic.deb
+	sudo apt-get install libopencv-videoio3.1 libqt5xml5 -y
 	sudo dpkg -i $(DOWNLOADS_DIR)/gmic.deb
 
 
@@ -329,7 +332,7 @@ nmap:
 
 
 opera:
-	echo 'deb https://deb.opera.com/opera-stable/ stable non-free' | tudo /etc/apt/sources.list.d/opera-stable.list
+	echo 'deb https://deb.opera.com/opera-stable/ stable non-free' | sudo tee /etc/apt/sources.list.d/opera-stable.list
 	wget -qO- https://deb.opera.com/archive.key | sudo apt-key add -
 	$(APT_UPDATE)
 	$(APT_INSTALL) opera-stable
